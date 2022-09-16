@@ -136,6 +136,5 @@ def start_training(X, Y, iterations, H):
     return W1, B1, W2, B2
 
 
-# start model training and return the model matrix
-# it contains the weight and bias trained with ReLu and softmax for printing the possibility of the result 
+# trained with ReLu and softmax for the possibility of the result
 W1, B1, W2, B2 = start_training(x_train, y_train, 500, 0.1)
