@@ -2,17 +2,17 @@
 # neccessory libraries
 from re import T
 from this import d
-import panda as pd
+import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
-data = pd.read_read('/kaggle/input/digit-recognizer/train.csv')
+data = pd.read_csv('/kaggle/input/digit-recognizer/train.csv')
 
 # displaythe table
 data.head
 
 # to convert to arrays
-data.np.array(data)
+data = np.array(data)
 m, n = data.shape  # n=784+1
 
 data_dev = data[0:1000].T  # for checking accuracy
@@ -66,6 +66,7 @@ def one_hot(Y):
     one_hot_Y = np.zeros(Y.size, Y.max()+1)
     one_hot_Y[np.arange(Y.size, Y)] = 1
     one_hot_Y = one_hot_Y.T  # each column an example
+    return one_hot_Y
 
 
 def ReLu_dev(Z):
@@ -138,3 +139,24 @@ def start_training(X, Y, iterations, H):
 
 # trained with ReLu and softmax for the possibility of the result
 W1, B1, W2, B2 = start_training(x_train, y_train, 500, 0.1)
+
+
+def make_predictions(X, W1, B1, W2, B2):
+    _,_,_,A2 = forward_prop(W1, B1, W2, B2, X)
+    predictions = return_prediction(A2)
+    return predictions
+    
+    
+def test_prediction(intex, W1, B1, W2, B2):
+    current_image = x_train[:, intex, None]
+    prediction = make_predictions(x_train[:, intex, None], W1, B1, W2, B2)
+    label = y_train[intex]
+    print("Prediction ",prediction)
+    print("Label ", label)
+    
+    current_image = current_image.reshape((28,28))*255
+    plt.gray()
+    plt.imshow(current_image, interpolation='nearest')
+    plt.show
+    
+test_prediction(3, W1, B1, W2, B2)
